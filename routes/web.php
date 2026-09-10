@@ -1,33 +1,20 @@
 <?php
 
-use App\Http\Controllers\AlunoController;
-use App\Models\Turma;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'home')->name('home');
-
-Route::get('/sobre', function () {
-    return 'Pagina sobre';
+Route::get('/', function () {
+    return view('welcome');
 });
 
-Route::get('/contato', function () {
-    return 'Pagina de contato';
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/produto/{id}', function ($id) {
-    return "Produto {$id}";
-});
-
-Route::get('/categoria/{id}', function ($id) {
-    return "Categoria {$id}";
-});
-
-Route::get('/usuario/{id}', function ($id) {
-    return "Usuario {$id}";
-});
-
-Route::get('/turmas/{turma}', function (Turma $turma) {
-    return view('turmas.show', compact('turma'));
-})->name('turmas.show');
-
-Route::resource('alunos', AlunoController::class);
+require __DIR__.'/auth.php';
