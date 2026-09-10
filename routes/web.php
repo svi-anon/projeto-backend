@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AlunoController;
-
+use App\Models\Turma;
 use Illuminate\Support\Facades\Route;
+
+Route::view('/', 'home')->name('home');
 
 Route::get('/sobre', function () {
     return 'Pagina sobre';
@@ -24,6 +26,8 @@ Route::get('/usuario/{id}', function ($id) {
     return "Usuario {$id}";
 });
 
-Route::view('/', 'home')->name('home');
+Route::get('/turmas/{turma}', function (Turma $turma) {
+    return view('turmas.show', compact('turma'));
+})->name('turmas.show');
 
 Route::resource('alunos', AlunoController::class);
