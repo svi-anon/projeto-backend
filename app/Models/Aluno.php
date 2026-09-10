@@ -12,10 +12,16 @@ class Aluno extends Model
         'email',
         'curso',
         'turma_id',
+        'user_id',
     ];
 
     public function turma(): BelongsTo
     {
         return $this->belongsTo(Turma::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }
