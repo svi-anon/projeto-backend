@@ -24,4 +24,6 @@ Route::get('/usuario/{id}', function ($id) {
     return "Usuario {$id}";
 });
 
+Route::view('/', 'home')->name('home');
+
 Route::resource('alunos', AlunoController::class);
