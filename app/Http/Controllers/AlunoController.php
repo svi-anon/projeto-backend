@@ -22,11 +22,15 @@ class AlunoController extends Controller
 
     public function create()
     {
+        Gate::authorize('create', Aluno::class);
+
         return view('alunos.create');
     }
 
     public function store(AlunoRequest $request)
     {
+        Gate::authorize('create', Aluno::class);
+
         Aluno::create($request->validated());
 
         return redirect()->route('alunos.index');
@@ -50,6 +54,8 @@ class AlunoController extends Controller
 
     public function destroy(Aluno $aluno)
     {
+        Gate::authorize('delete', $aluno);
+
         $aluno->delete();
 
         return redirect()->route('alunos.index');
