@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 class AlunoController extends Controller
 {
-    public function index()
-    {
-        return view('alunos.index');
-    }
+public function index()
+{
+    $alunos = [
+        ['nome' => 'Ana'],
+        ['nome' => 'Bruno'],
+        ['nome' => 'Carlos']
+    ];
 
+    return view('alunos.index', compact('alunos'));
+}
     public function show(string $id)
     {
         return view('alunos.show', compact('id'));
