@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AlunoRequest;
 use App\Models\Aluno;
+use Illuminate\Support\Facades\Gate;
 
 class AlunoController extends Controller
 {
@@ -33,11 +34,15 @@ class AlunoController extends Controller
 
     public function edit(Aluno $aluno)
     {
+        Gate::authorize('update', $aluno);
+
         return view('alunos.edit', compact('aluno'));
     }
 
     public function update(AlunoRequest $request, Aluno $aluno)
     {
+        Gate::authorize('update', $aluno);
+
         $aluno->update($request->validated());
 
         return redirect()->route('alunos.index');
