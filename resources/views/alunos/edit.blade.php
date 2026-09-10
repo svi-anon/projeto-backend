@@ -1,0 +1,1 @@
+<h1>Editar aluno {{ $id }}</h1>
