@@ -1,13 +1,11 @@
 <?php
 
+use App\Http\Controllers\AlunoController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/sobre', function () {
     return 'Pagina sobre';
-});
-
-Route::get('/alunos', function () {
-    return 'Lista de alunos';
 });
 
 Route::get('/contato', function () {
@@ -25,3 +23,5 @@ Route::get('/categoria/{id}', function ($id) {
 Route::get('/usuario/{id}', function ($id) {
     return "Usuario {$id}";
 });
+
+Route::resource('alunos', AlunoController::class);
