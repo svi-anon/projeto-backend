@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aluno;
+use Illuminate\Http\Request;
 
 class AlunoController extends Controller
 {
@@ -10,20 +11,12 @@ class AlunoController extends Controller
     {
         $alunos = Aluno::all();
 
-        $alunosCurso = Aluno::where('curso', 'Engenharia de Software')->get();
-
-        $alunosNome = Aluno::where('nome', 'like', '%Ana%')->get();
-
-        $alunosRecentes = Aluno::latest()->take(5)->get();
-
-        $quantidadeAlunos = Aluno::count();
-
         return view('alunos.index', compact('alunos'));
     }
 
-    public function show(string $id)
+    public function show(Aluno $aluno)
     {
-        return view('alunos.show', compact('id'));
+        return view('alunos.show', compact('aluno'));
     }
 
     public function create()
@@ -31,23 +24,37 @@ class AlunoController extends Controller
         return view('alunos.create');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        return 'Aluno cadastrado';
+        Aluno::create([
+            'nome' => $request->nome,
+            'email' => $request->email,
+            'curso' => $request->curso,
+        ]);
+
+        return redirect()->route('alunos.index');
     }
 
-    public function edit(string $id)
+    public function edit(Aluno $aluno)
     {
-        return view('alunos.edit', compact('id'));
+        return view('alunos.edit', compact('aluno'));
     }
 
-    public function update(string $id)
+    public function update(Request $request, Aluno $aluno)
     {
-        return "Aluno {$id} atualizado";
+        $aluno->update([
+            'nome' => $request->nome,
+            'email' => $request->email,
+            'curso' => $request->curso,
+        ]);
+
+        return redirect()->route('alunos.index');
     }
 
-    public function destroy(string $id)
+    public function destroy(Aluno $aluno)
     {
-        return "Aluno {$id} excluido";
+        $aluno->delete();
+
+        return redirect()->route('alunos.index');
     }
 }
