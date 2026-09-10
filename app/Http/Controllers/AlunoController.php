@@ -2,18 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Aluno;
+
 class AlunoController extends Controller
 {
-public function index()
-{
-    $alunos = [
-        ['nome' => 'Ana'],
-        ['nome' => 'Bruno'],
-        ['nome' => 'Carlos']
-    ];
+    public function index()
+    {
+        $alunos = Aluno::all();
 
-    return view('alunos.index', compact('alunos'));
-}
+        $alunosCurso = Aluno::where('curso', 'Engenharia de Software')->get();
+
+        $alunosNome = Aluno::where('nome', 'like', '%Ana%')->get();
+
+        $alunosRecentes = Aluno::latest()->take(5)->get();
+
+        $quantidadeAlunos = Aluno::count();
+
+        return view('alunos.index', compact('alunos'));
+    }
+
     public function show(string $id)
     {
         return view('alunos.show', compact('id'));
